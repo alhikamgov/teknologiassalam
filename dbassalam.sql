@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2026 pada 13.04
+-- Waktu pembuatan: 02 Jul 2026 pada 14.29
 -- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.0.30
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -281,6 +281,39 @@ INSERT INTO `sambutan` (`id`, `nama`, `foto`, `pesan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `siswa`
+--
+
+CREATE TABLE `siswa` (
+  `id` int(11) NOT NULL,
+  `nis` varchar(20) NOT NULL,
+  `nama` varchar(150) NOT NULL,
+  `jk` enum('Laki-laki','Perempuan') NOT NULL,
+  `kelas` varchar(50) NOT NULL,
+  `jurusan` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `siswa`
+--
+
+INSERT INTO `siswa` (`id`, `nis`, `nama`, `jk`, `kelas`, `jurusan`) VALUES
+(1, '232401001', 'Ahmad Faozi', 'Laki-laki', 'XII RPL 1', 'Rekayasa Perangkat Lunak'),
+(2, '232401002', 'Siti Aminah', 'Perempuan', 'XII RPL 1', 'Rekayasa Perangkat Lunak'),
+(3, '232402001', 'Rian Hidayat', 'Laki-laki', 'XI TKJ 2', 'Teknik Komputer & Jaringan'),
+(4, '232402002', 'Putri Utami', 'Perempuan', 'X TKJ 1', 'Teknik Komputer & Jaringan'),
+(5, '232401003', 'Budi Santoso', 'Laki-laki', 'XII RPL 1', 'Rekayasa Perangkat Lunak'),
+(6, '232401004', 'Dewi Lestari', 'Perempuan', 'XI RPL 2', 'Rekayasa Perangkat Lunak'),
+(7, '232402003', 'Eko Prasetyo', 'Laki-laki', 'X TKJ 2', 'Teknik Komputer & Jaringan'),
+(8, '232402004', 'Farida Utami', 'Perempuan', 'XI TKJ 1', 'Teknik Komputer & Jaringan'),
+(9, '232401005', 'Gilang Ramadhan', 'Laki-laki', 'XII RPL 1', 'Rekayasa Perangkat Lunak'),
+(10, '232401006', 'Hany Fitriani', 'Perempuan', 'X RPL 1', 'Rekayasa Perangkat Lunak'),
+(11, '232402005', 'Irfan Hakim', 'Laki-laki', 'XI TKJ 2', 'Teknik Komputer & Jaringan'),
+(12, '232402006', 'Julia Perez', 'Perempuan', 'XII TKJ 1', 'Teknik Komputer & Jaringan');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `statistik`
 --
 
@@ -325,21 +358,46 @@ INSERT INTO `testimoni` (`id`, `nama`, `pesan`, `lulusan`, `foto`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `ujian`
+--
+
+CREATE TABLE `ujian` (
+  `id` int(11) NOT NULL,
+  `hari` varchar(20) NOT NULL,
+  `tanggal` varchar(50) NOT NULL,
+  `mapel` varchar(100) NOT NULL,
+  `waktu` varchar(30) NOT NULL,
+  `ruang` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `ujian`
+--
+
+INSERT INTO `ujian` (`id`, `hari`, `tanggal`, `mapel`, `waktu`, `ruang`) VALUES
+(1, 'Senin', '24 Agustus 2026', 'Bahasa Inggris', '07:30 - 09:30', 'Ruang Lab Komputer 1'),
+(2, 'Selasa', '25 Agustus 2026', 'Matematika', '07:30 - 09:30', 'Ruang Kelas XI-A');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'adminjuga');
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(1, 'admin', 'adminjuga', 'admin'),
+(2, 'user', 'user123', 'user');
 
 --
 -- Indexes for dumped tables
@@ -420,6 +478,13 @@ ALTER TABLE `sambutan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nis` (`nis`);
+
+--
 -- Indeks untuk tabel `statistik`
 --
 ALTER TABLE `statistik`
@@ -429,6 +494,12 @@ ALTER TABLE `statistik`
 -- Indeks untuk tabel `testimoni`
 --
 ALTER TABLE `testimoni`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `ujian`
+--
+ALTER TABLE `ujian`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -515,6 +586,12 @@ ALTER TABLE `sambutan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `siswa`
+--
+ALTER TABLE `siswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT untuk tabel `statistik`
 --
 ALTER TABLE `statistik`
@@ -527,10 +604,16 @@ ALTER TABLE `testimoni`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `ujian`
+--
+ALTER TABLE `ujian`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
