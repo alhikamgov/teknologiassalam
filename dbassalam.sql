@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jul 2026 pada 14.29
+-- Waktu pembuatan: 02 Jul 2026 pada 16.15
 -- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Versi PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -61,7 +61,6 @@ CREATE TABLE `berita` (
 --
 
 INSERT INTO `berita` (`id`, `judul`, `ringkasan`, `gambar`) VALUES
-(1, 'Juara 1 LKS Tingkat Provinsi', 'Siswa TKJ SMK Assalam berhasil meraih juara pertama dalam bidang Cyber Security.', 'galeri/8.jpg'),
 (2, 'Kerjasama Baru dengan PT. Astra', 'Penandatanganan MoU untuk penyaluran lulusan jurusan Teknik Kendaraan Ringan.', 'galeri/1.jpg');
 
 -- --------------------------------------------------------
@@ -83,7 +82,7 @@ CREATE TABLE `ekskul` (
 INSERT INTO `ekskul` (`id`, `nama`, `gambar`) VALUES
 (1, 'Futsal & Sepakbola', 'https://sportaways.com/storage/products/2025/09/munich-x-team-f4-6677074-fyellowr-blue-4-1-b9mw0qzs.webp'),
 (2, 'Pramuka Inti', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs3Y2pHQo1LsGmASp-83S96-NUSPRo0d8qxw&s'),
-(3, 'Robotik & Coding', 'galeri/ekskul_1779792889_gambar.jpg');
+(3, 'Robotik & Coding', 'galeri/ekskul_1783001420_gambar.jpg');
 
 -- --------------------------------------------------------
 
@@ -102,10 +101,10 @@ CREATE TABLE `fasilitas` (
 --
 
 INSERT INTO `fasilitas` (`id`, `nama`, `img`) VALUES
-(1, 'Gedung Milik Sendiri', 'galeri/fasilitas_1779792857_img.jpg'),
+(1, 'Gedung Milik Sendiri', 'galeri/fasilitas_1783001308_img.jpg'),
 (2, 'Lab Komputer & Fiber Optic', 'galeri/labkomputer.png'),
 (3, 'Workshop Otomotif Standar Industri', 'galeri/workshop.jpg'),
-(4, 'Perpustakaan Digital', 'galeri/fasilitas_1779792865_img.jpg');
+(4, 'Perpustakaan Digital', 'galeri/fasilitas_1783001403_img.jpg');
 
 -- --------------------------------------------------------
 
@@ -148,7 +147,7 @@ CREATE TABLE `hero` (
 --
 
 INSERT INTO `hero` (`id`, `judul_utama`, `subtitle`, `img_slider_1`, `img_slider_2`) VALUES
-(1, 'SMK Teknologi Assalam Cikarang', 'Mencetak Generasi Berkarakter, Unggul dalam Teknologi, dan Siap Kerja.', 'galeri/gurusmkassalam.png', 'galeri/smksrc.png');
+(1, 'SMK Teknologi Assalam Cikarang', 'Mencetak Generasi Berkarakter, Unggul dalam Teknologi, dan Siap Kerja.', 'galeri/hero_1783001142_img_slider_1.jpeg', 'galeri/smksrc.png');
 
 -- --------------------------------------------------------
 
@@ -168,9 +167,8 @@ CREATE TABLE `jurusan` (
 --
 
 INSERT INTO `jurusan` (`id`, `nama`, `foto`, `deskripsi`) VALUES
-(1, 'Teknik Kendaraan Ringan (TKR)', 'https://smkn1langsa.sch.id/images/jurusan/foto_1634796184.jpg', 'Fokus pada pemeliharaan dan perbaikan kendaraan bermotor roda empat sesuai standar industri otomotif.'),
-(2, 'Teknik Komputer Jaringan (TKJ)', 'https://course-net.com/wp-content/uploads/2025/03/jurusan-teknik-komputer-dan-jaringan_.jpg', 'Mempelajari perakitan komputer, instalasi jaringan LAN/WAN, server, dan keamanan siber.'),
-(3, 'Akuntansi Keuangan Lembaga', 'galeri/jurusan_1779792825_foto.jpg', 'Membekali siswa dengan keahlian mengelola transaksi keuangan, pajak, dan audit perkantoran.');
+(1, 'Teknik Kendaraan Ringan (TKR)', 'galeri/jurusan_1783001497_foto.png', 'Fokus pada pemeliharaan dan perbaikan kendaraan bermotor roda empat sesuai standar industri otomotif.'),
+(2, 'Teknik Komputer Jaringan (TKJ)', 'galeri/jurusan_1783001531_foto.png', 'Mempelajari perakitan komputer, instalasi jaringan LAN/WAN, server, dan keamanan siber.');
 
 -- --------------------------------------------------------
 
@@ -194,7 +192,7 @@ CREATE TABLE `kontak` (
 --
 
 INSERT INTO `kontak` (`id`, `alamat`, `telp`, `email`, `wa`, `ig`, `fb`, `tentang`) VALUES
-(1, 'Jl. Industri Bumi Asih No.32/102, Bekasi, Jawa Barat', '021-89107044', 'info@smkassalambekasi.sch.id', '628123456789', 'smkassalambekasi', 'smk.assalam.bekasi', 'SMK Teknologi Assalam Bekasi adalah lembaga pendidikan vokasi unggulan di pusat industri Bekasi yang berfokus pada integrasi teknologi dan karakter religius.');
+(1, 'Jl. Industri Bumi Asih No.32/102, Bekasi, Jawa Barat', '021-89123456\r\n', 'info@smkassalambekasi.sch.id', '628123456789', 'smkassalambekasi', 'smk.assalam.bekasi', 'SMK Teknologi Assalam Bekasi adalah lembaga pendidikan vokasi unggulan di pusat industri Bekasi yang berfokus pada integrasi teknologi dan karakter religius.');
 
 -- --------------------------------------------------------
 
@@ -276,7 +274,7 @@ CREATE TABLE `sambutan` (
 --
 
 INSERT INTO `sambutan` (`id`, `nama`, `foto`, `pesan`) VALUES
-(1, 'XX', 'galeri/kepsek.png', 'Kami berkomitmen memberikan pendidikan teknik terbaik dengan kurikulum yang selaras dengan kebutuhan industri saat ini untuk menghasilkan lulusan yang kompeten dan religius.');
+(1, 'zarkasyi', 'galeri/kepsek.png', 'Kami berkomitmen memberikan pendidikan teknik terbaik dengan kurikulum yang selaras dengan kebutuhan industri saat ini untuk menghasilkan lulusan yang kompeten dan religius.');
 
 -- --------------------------------------------------------
 
@@ -328,10 +326,10 @@ CREATE TABLE `statistik` (
 --
 
 INSERT INTO `statistik` (`id`, `label`, `angka`) VALUES
-(1, 'Siswa Aktif', 'XXX'),
-(2, 'Guru & Staff', 'XXX'),
-(3, 'Mitra Industri', 'XX'),
-(4, 'Lulusan Terserap', 'xx');
+(1, 'Siswa Aktif', '5000'),
+(2, 'Guru & Staff', '35'),
+(3, 'Mitra Industri', '25'),
+(4, 'Lulusan Terserap', '5000');
 
 -- --------------------------------------------------------
 

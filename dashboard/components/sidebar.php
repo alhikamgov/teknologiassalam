@@ -42,22 +42,28 @@ $role_sekarang = $_SESSION['role'] ?? 'user';
                 </div>
             </div>
         </li>
-
+    <?php endif; ?>
+        
+    <?php if (in_array($role_sekarang, ['admin', 'user'])): ?>
         <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkademik">
-        <i class="fas fa-graduation-cap"></i> <span>Akademik</span>
-    </a>
-    <div id="collapseAkademik" class="collapse <?= in_array($curr, ['jurusan', 'guru', 'fasilitas', 'ekskul', 'siswa', 'ujian']) ? 'show' : '' ?>" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item <?= $curr == 'siswa' ? 'active' : '' ?>" href="?s=siswa">Data Siswa</a>
-            <a class="collapse-item <?= $curr == 'ujian' ? 'active' : '' ?>" href="?s=ujian">Data Ujian</a>
-            <a class="collapse-item <?= $curr == 'jurusan' ? 'active' : '' ?>" href="?s=jurusan">Jurusan</a>
-            <a class="collapse-item <?= $curr == 'guru' ? 'active' : '' ?>" href="?s=guru">Guru</a>
-            <a class="collapse-item <?= $curr == 'fasilitas' ? 'active' : '' ?>" href="?s=fasilitas">Fasilitas</a>
-            <a class="collapse-item <?= $curr == 'ekskul' ? 'active' : '' ?>" href="?s=ekskul">Ekskul</a>
-        </div>
-    </div>
-</li>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkademik">
+                <i class="fas fa-graduation-cap"></i> <span>Akademik</span>
+            </a>
+            <div id="collapseAkademik" class="collapse <?= in_array($curr, ['jurusan', 'guru', 'fasilitas', 'ekskul', 'siswa', 'ujian']) ? 'show' : '' ?>" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item <?= $curr == 'siswa' ? 'active' : '' ?>" href="?s=siswa">Data Siswa</a>
+                    <a class="collapse-item <?= $curr == 'ujian' ? 'active' : '' ?>" href="?s=ujian">Data Ujian</a>
+                    
+                    <?php if ($role_sekarang === 'admin'): ?>
+                        <a class="collapse-item <?= $curr == 'jurusan' ? 'active' : '' ?>" href="?s=jurusan">Jurusan</a>
+                        <a class="collapse-item <?= $curr == 'guru' ? 'active' : '' ?>" href="?s=guru">Guru</a>
+                        <a class="collapse-item <?= $curr == 'fasilitas' ? 'active' : '' ?>" href="?s=fasilitas">Fasilitas</a>
+                    <?php endif; ?>
+                    
+                    <a class="collapse-item <?= $curr == 'ekskul' ? 'active' : '' ?>" href="?s=ekskul">Ekskul</a>
+                </div>
+            </div>
+        </li>
     <?php endif; ?>
 
     <li class="nav-item">
@@ -68,10 +74,7 @@ $role_sekarang = $_SESSION['role'] ?? 'user';
                 <a class="collapse-item <?= $curr == 'pengumuman' ? 'active' : '' ?>" href="?s=pengumuman">Pengumuman</a>
                 <a class="collapse-item <?= $curr == 'agenda' ? 'active' : '' ?>" href="?s=agenda">Agenda</a>
                 <a class="collapse-item <?= $curr == 'testimoni' ? 'active' : '' ?>" href="?s=testimoni">Testimoni</a>
-                
-                <?php if ($role_sekarang === 'admin'): ?>
-                    <a class="collapse-item <?= $curr == 'galeri' ? 'active' : '' ?>" href="?s=galeri">Galeri Foto</a>
-                <?php endif; ?>
+                <a class="collapse-item <?= $curr == 'galeri' ? 'active' : '' ?>" href="?s=galeri">Galeri Foto</a>
             </div>
         </div>
     </li>

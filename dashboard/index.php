@@ -36,7 +36,7 @@ $curr = $_GET['s'] ?? 'hero';
 // --- VALIDASI/BLOCKING URL UNTUK USER BIASA ---
 if ($user_role === 'user') {
     // Menu yang boleh diakses oleh user biasa lewat URL
-    $allowed_user_sections = ['berita', 'pengumuman', 'agenda', 'testimoni', 'settings'];
+    $allowed_user_sections = ['siswa', 'ujian', 'ekskul', 'berita', 'pengumuman', 'agenda', 'testimoni', 'galeri', 'settings'];
     
     if (!in_array($curr, $allowed_user_sections)) {
         // Jika mencoba masuk menu admin, lempar otomatis ke Berita
