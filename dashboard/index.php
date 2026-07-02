@@ -6,8 +6,17 @@ if (isset($conn)) {
 }
 
 session_start();
-$upload_dir = '../galeri/'; // Disesuaikan karena posisi file sekarang di dalam folder /dashboard
 
+// --- PROTEKSI HALAMAN UTAMA ---
+if (!isset($_SESSION['user_logged_in'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Tangkap role yang sedang aktif
+$user_role = $_SESSION['role'] ?? 'user'; 
+
+$upload_dir = '../galeri/'; 
 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
 // --- KONEKSI DATABASE MYSQL ---
@@ -22,17 +31,27 @@ require_once "actions/delete_file.php";
 require_once "actions/change_password.php";
 require_once "actions/crud.php";
 
-// --- PROTEKSI HALAMAN ---
-if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: login.php");
-    exit;
-}
-
 $curr = $_GET['s'] ?? 'hero';
+
+// --- VALIDASI/BLOCKING URL UNTUK USER BIASA ---
+if ($user_role === 'user') {
+    // Menu yang boleh diakses oleh user biasa lewat URL
+    $allowed_user_sections = ['berita', 'pengumuman', 'agenda', 'testimoni', 'settings'];
+    
+    if (!in_array($curr, $allowed_user_sections)) {
+        // Jika mencoba masuk menu admin, lempar otomatis ke Berita
+        header("Location: index.php?s=berita");
+        exit;
+    }
+}
 
 // --- QUERY DATA UNTUK DITAMPILKAN ---
 $data_tabel = [];
-if (!in_array($curr, ['galeri', 'settings'])) {
+
+// Tambahkan modul presensi ke dalam array pengecualian agar tidak di-query otomatis
+$excluded_sections = ['galeri', 'settings', 'data-pegawai', 'presensi-lobby', 'hasil-presensi'];
+
+if (!in_array($curr, $excluded_sections)) {
     $query_get = mysqli_query($conn, "SELECT * FROM `$curr`");
     if ($query_get) {
         if (in_array($curr, ['hero', 'sambutan', 'kontak'])) {
@@ -70,16 +89,13 @@ if (!in_array($curr, ['galeri', 'settings'])) {
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Load Sidebar -->
         <?php include_once "components/sidebar.php"; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Load Topbar/Navbar -->
                 <?php include_once "components/navbar.php"; ?>
 
                 <div class="container-fluid">
-                    <!-- Notifikasi Sistem -->
                     <?php if($msg): ?>
                         <div class="alert alert-<?= $msg_type ?> alert-dismissible fade show shadow-sm" role="alert">
                             <?= $msg ?>
@@ -87,13 +103,11 @@ if (!in_array($curr, ['galeri', 'settings'])) {
                         </div>
                     <?php endif; ?>
 
-                    <!-- Routing Konten Modul -->
                     <?php 
                     if ($curr === 'galeri') {
                         include_once "views/galeri.php";
                     } elseif ($curr === 'settings') {
                         include_once "views/settings.php";
-                    // --- START TAMBAHAN MODUL PRESENSI ---
                     } elseif ($curr === 'data-pegawai') {
                         include_once "views/presensi/data_pegawai.php";
                     } elseif ($curr === 'presensi-lobby') {
@@ -107,12 +121,10 @@ if (!in_array($curr, ['galeri', 'settings'])) {
                 </div>
             </div>
             
-            <!-- Load Footer -->
             <?php include_once "components/footer.php"; ?>
         </div>
     </div>
 
-    <!-- Load Modal Editor -->
     <?php include_once "components/modal.php"; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -121,18 +133,19 @@ if (!in_array($curr, ['galeri', 'settings'])) {
     
     <script>
     function copyPath(path) {
-        // Karena letak gambar di naik satu folder dari file index ini, 
-        // kita ubah path visualnya agar tetap presisi dibaca root aplikasi luar jika perlu.
         navigator.clipboard.writeText(path);
         alert('Path gambar disalin: ' + path);
     }
 
+    // PERBAIKAN: Mengubah ffunction menjadi function biasa
     function openForm(data = null, idx = "") {
         $('#f_idx').val(idx);
         const cont = $('#f_fields').empty();
         const currentSection = "<?= $curr ?>";
         
         const templates = {
+            "ujian": { "hari": "", "tanggal": "", "mapel": "", "waktu": "", "ruang": "" },
+            "siswa": { "nis": "", "nama": "", "jk": "", "kelas": "", "jurusan": "" }, 
             "ekskul": { "nama": "", "gambar": "" }, 
             "guru": { "nama": "", "foto": "", "deskripsi": "" }, 
             "statistik": { "label": "", "angka": "" },

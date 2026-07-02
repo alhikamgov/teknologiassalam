@@ -3,7 +3,8 @@ session_start();
 require_once "../koneksi.php";
 require_once "actions/auth.php";
 
-if (isset($_SESSION['admin_logged_in'])) {
+// JIKA SUDAH LOGIN, DIALIKAN SESUAI ROLE MASING-MASING
+if (isset($_SESSION['user_logged_in'])) {
     header("Location: index.php");
     exit;
 }
@@ -13,7 +14,7 @@ if (isset($_SESSION['admin_logged_in'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login Admin</title>
+    <title>Login Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg, #0440b3 0%, #021b4a 100%); height: 100vh; display: flex; align-items: center; }
@@ -28,8 +29,8 @@ if (isset($_SESSION['admin_logged_in'])) {
                 <div class="card card-login">
                     <div class="card-body p-5">
                         <div class="text-center mb-4">
-                            <h3 class="font-weight-bold text-dark">Panel Admin</h3>
-                            <p class="text-muted small">Silahkan masuk untuk mengelola konten</p>
+                            <h3 class="font-weight-bold text-dark">Login Portal</h3>
+                            <p class="text-muted small">Silahkan masuk menggunakan akun Anda</p>
                         </div>
                         <?php if(isset($login_error)): ?>
                             <div class="alert alert-danger py-2 small text-center"><?= $login_error ?></div>

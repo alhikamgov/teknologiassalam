@@ -60,6 +60,13 @@ $berita     = mysqli_fetch_all(mysqli_query($conn, "SELECT * FROM berita"), MYSQ
         .testi-card:hover { transform: translateY(-5px); }
         .quote-icon { font-size: 3rem; color: var(--primary-color); opacity: 0.1; position: absolute; top: 20px; right: 30px; }
         .img-jurusan { height: 200px; object-fit: cover; width: 100%; }
+        /* Style tambahan agar tampilan dropdown item serasi dengan navbar utama */
+        .dropdown-menu { border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 10px; }
+        /* Menghilangkan background biru bawaan Bootstrap pada dropdown item yang aktif */
+        .dropdown-menu .dropdown-item.active {background-color: transparent;color: #333; }
+        .dropdown-menu .dropdown-item.active:hover {background-color: rgba(4, 64, 179, 0.05);color: var(--primary-color); }
+        .dropdown-item { font-size: 0.85rem; font-weight: 500; color: #333; transition: 0.3s; }
+        .dropdown-item:hover { background-color: rgba(4, 64, 179, 0.05); color: var(--primary-color); }
     </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#mainNav">
@@ -77,12 +84,23 @@ $berita     = mysqli_fetch_all(mysqli_query($conn, "SELECT * FROM berita"), MYSQ
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#hero">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#profil">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="index.php">Beranda</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-lg-2 small fw-semibold" href="#" id="navbarDropdownProfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profil
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="navbarDropdownProfil">
+                            <li><a class="dropdown-item py-2 px-3" href="#profil">Sambutan Kepala Sekolah</a></li>
+                            <li><a class="dropdown-item py-2 px-3" href="guru.php">Data Pendidik</a></li>
+                            <li><a class="dropdown-item py-2 px-3" href="siswa.php">Data Pelajar</a></li>
+                            <li><a class="dropdown-item py-2 px-3" href="ujian.php">Data Ujian</a></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#jurusan">Jurusan</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#berita">Berita</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#informasi">Informasi</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#guru">Guru</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#fasilitas">Fasilitas</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-2 small fw-semibold" href="#testimoni">Testimoni</a></li>
                     
@@ -217,25 +235,6 @@ $berita     = mysqli_fetch_all(mysqli_query($conn, "SELECT * FROM berita"), MYSQ
         </div>
     </section>
 
-    <section id="guru" class="section-padding bg-light">
-        <div class="container text-center">
-            <h2 class="section-title">Tenaga Pendidik</h2>
-            <div class="row g-4">
-                <?php foreach($guru as $g): ?>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card card-custom h-100">
-                        <img src="<?= $g['foto'] ?>" class="card-img-top img-guru" onerror="this.src='https://placehold.co/600x800?text=Guru'">
-                        <div class="card-body bg-white p-4">
-                            <h5 class="fw-bold mb-1"><?= $g['nama'] ?></h5>
-                            <p class="text-primary small mb-0 fw-medium"><?= $g['deskripsi'] ?></p>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
     <section id="fasilitas" class="section-padding">
         <div class="container text-center">
             <h2 class="section-title">Fasilitas & Lingkungan</h2>
@@ -327,41 +326,7 @@ $berita     = mysqli_fetch_all(mysqli_query($conn, "SELECT * FROM berita"), MYSQ
         </div>
     </section>
 
-    <footer class="bg-dark text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-5">
-                    <h4 class="fw-bold text-primary mb-4">SMK Teknologi Assalam</h4>
-                    <p class="opacity-75 pe-lg-5 mb-4"><?= $kontak['tentang'] ?? '' ?></p>
-                    <div class="d-flex gap-3 mt-4">
-                        <a href="https://www.instagram.com/<?= $kontak['ig'] ?? '' ?>" class="btn btn-outline-light rounded-circle"><i class="bi bi-instagram"></i></a>
-                        <a href="https://fb.me/<?= $kontak['fb'] ?? '' ?>" class="btn btn-outline-light rounded-circle"><i class="bi bi-facebook"></i></a>
-                        <a href="https://wa.me/<?= $kontak['wa'] ?? '' ?>" class="btn btn-outline-light rounded-circle"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <h5 class="fw-bold mb-4">Navigasi Cepat</h5>
-                    <ul class="list-unstyled opacity-75">
-                        <li class="mb-2"><a href="#hero" class="text-white text-decoration-none">Beranda</a></li>
-                        <li class="mb-2"><a href="#profil" class="text-white text-decoration-none">Profil Sekolah</a></li>
-                        <li class="mb-2"><a href="#jurusan" class="text-white text-decoration-none">Program Keahlian</a></li>
-                        <li class="mb-2"><a href="#guru" class="text-white text-decoration-none">Tenaga Pendidik</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="fw-bold mb-4">Hubungi Kami</h5>
-                    <p class="small opacity-75 mb-2"><i class="bi bi-geo-alt-fill text-primary me-2"></i> <?= $kontak['alamat'] ?? '' ?></p>
-                    <p class="small opacity-75 mb-2"><i class="bi bi-telephone-fill text-primary me-2"></i> <?= $kontak['telp'] ?? '' ?></p>
-                    <p class="small opacity-75 mb-4"><i class="bi bi-envelope-fill text-primary me-2"></i> <?= $kontak['email'] ?? '' ?></p>
-                </div>
-            </div>
-            <hr class="mt-5 mb-4 opacity-25">
-            <div class="text-center opacity-50 small">
-                <p>&copy; 2026 SMK Teknologi Assalam Bekasi. All Rights Reserved. </p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php 
+// PANGGIL FOOTER
+include 'footer.php'; 
+?>
